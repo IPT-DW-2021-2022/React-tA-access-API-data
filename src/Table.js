@@ -41,7 +41,11 @@ const Body = (props) => {
                 <td>{row.breed}</td>
                 <td>{row.weight}</td>
                 <td>{row.ownerName}</td>
-                <td>{row.photo}</td>
+                <td><img src={'Animals/' + row.photo} 
+                         alt={'photo of '+row.name}
+                         title={row.name}
+                         height="50" />
+                </td>
             </tr>
         )
     })
