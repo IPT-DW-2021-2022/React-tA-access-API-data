@@ -7,10 +7,12 @@ import Table from './Table';
 
 /**
  * read the animals'data from API
+ * To access data, is necessary to create a PROXY
+ * https://create-react-app.dev/docs/proxying-api-requests-in-development/
  */
 async function getAnimals() {
   // read the animals'data from API
-  let animalsData = await fetch("https://localhost:7046/api/AnimalsAPI/"); 
+  let animalsData = await fetch("api/AnimalsAPI/"); 
 
   // avaliate the data collected
   if (!animalsData.ok) {
