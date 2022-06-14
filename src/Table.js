@@ -20,6 +20,7 @@ function Header() {
                 <th>Weight</th>
                 <th>Owner</th>
                 <th>Photo</th>
+                <th></th>
             </tr>
         </thead>
     )
@@ -41,10 +42,15 @@ const Body = (props) => {
                 <td>{row.breed}</td>
                 <td>{row.weight}</td>
                 <td>{row.ownerName}</td>
-                <td><img src={'Animals/' + row.photo} 
-                         alt={'photo of '+row.name}
-                         title={row.name}
-                         height="50" />
+                <td><img src={'Animals/' + row.photo}
+                    alt={'photo of ' + row.name}
+                    title={row.name}
+                    height="50" />
+                </td>
+                <td>
+                    <button className="btn btn-outline-danger"
+                            onClick={() => props.animalToBeDeletedOUT(row.id)}
+                    >Delete</button>
                 </td>
             </tr>
         )
@@ -61,12 +67,13 @@ const Body = (props) => {
 class Table extends Component {
     render() {
         // 'read' data that was supplied to component 'Table'
-        const { animalsDataIN } = this.props
+        const { animalsDataIN, deleteAnimalOUT } = this.props
 
         return (
             <table className="table table-striped table-sucess">
                 <Header />
-                <Body dataTableIN={animalsDataIN} />
+                <Body dataTableIN={animalsDataIN} animalToBeDeletedOUT={deleteAnimalOUT} />
+                {/*        <-----------                      --------------->*/}
             </table>
         )
     }

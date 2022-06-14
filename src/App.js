@@ -80,6 +80,27 @@ async function AddAnimal(animal) {
   return await resposta.json();
 }
 
+/**
+ * Sends data to API to delete the animal
+ * @param {*} animalId 
+ */
+async function deleteAnimal(animalId) {
+  let formData = new FormData();
+  formData.append("id", animalId);
+  // send data to API
+  let resposta = await fetch("api/AnimalsAPI/" + animalId,
+    {
+      method: "DELETE",
+      body: formData
+    })
+  if (!resposta.ok) {
+    console.error(resposta);
+    throw new Error("It ws not possible to delete the animal. Code: ", resposta.status)
+  }
+  else {
+    alert("the animal was deleted");
+  }
+}
 
 
 class App extends React.Component {
@@ -148,8 +169,19 @@ class App extends React.Component {
     await this.LoadAnimals();
   }
 
-
-
+  /**
+   * request the action to Delete the animal that user choosed
+   * @param {*} animalId 
+   */
+  handleDeleteAnimal = async (animalId) => {
+    try {
+      await deleteAnimal(animalId);
+    } catch (error) {
+      console.error("Error when deleting the animal", error);
+    }
+    // redraw the table
+    await this.LoadAnimals();
+  }
 
 
   render() {
@@ -163,7 +195,7 @@ class App extends React.Component {
 
         <br />
         <h4>Animals list</h4>
-        <Table animalsDataIN={animals} />
+        <Table animalsDataIN={animals} deleteAnimalOUT={this.handleDeleteAnimal} />
       </div>
     )
   }
