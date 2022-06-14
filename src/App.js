@@ -50,10 +50,34 @@ async function getOwners() {
 
 /**
  * this function is the function that realy sends new animal data to API
+ * // Submissão de dados para a API
+//    https://developer.mozilla.org/pt-BR/docs/Web/API/FormData
+//    https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
  * @param {*} animal 
  */
 async function AddAnimal(animal) {
-  // to be done tomorow
+  // create an object to transport data from React to API
+  let formData = new FormData();
+  formData.append("Name", animal.Name);
+  formData.append("Breed", animal.Breed);
+  formData.append("Species", animal.Specie);
+  formData.append("Weight", animal.Weight);
+  formData.append("OwnerFK", animal.OwnerFK);
+  formData.append("uploadPhoto", animal.uploadPhoto);
+
+  // send data to API
+  let resposta = await fetch("api/animalsAPI",
+    {
+      method: "POST",
+      body: formData
+    }
+  );
+  if (!resposta.ok) {
+    console.error(resposta);
+    throw new Error("it was not possible to add the animal. Code: ",
+      resposta.status)
+  }
+  return await resposta.json();
 }
 
 
@@ -123,6 +147,10 @@ class App extends React.Component {
     // 3.
     await this.LoadAnimals();
   }
+
+
+
+
 
   render() {
     const { animals, owners } = this.state;
